@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:meta/meta.dart';
 import 'package:movie_screen/presentation/base/view_interface.dart';
 import 'view_model_base.dart';
 
