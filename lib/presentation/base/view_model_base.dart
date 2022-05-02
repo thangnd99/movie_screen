@@ -49,11 +49,9 @@ abstract class ViewModelBase extends GetxController implements IViewModelBase {
       case ConnectivityResult.wifi:
         onConnected();
         break;
-
       case ConnectivityResult.mobile:
         onConnected();
         break;
-
       case ConnectivityResult.none:
         onDisconnect();
         break;
@@ -81,5 +79,3 @@ abstract class ViewModelBase extends GetxController implements IViewModelBase {
 
 /// IViewModelBase
 mixin IViewModelBase {}
-
-

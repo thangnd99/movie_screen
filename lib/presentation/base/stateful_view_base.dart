@@ -4,53 +4,35 @@ import 'package:meta/meta.dart';
 import 'package:movie_screen/presentation/base/view_interface.dart';
 import 'view_model_base.dart';
 
+/// StatefulViewBase
+abstract class StatefulViewBase extends StatefulWidget {
+  /// StatefulViewBase constructor
+  const StatefulViewBase({Key? key}) : super(key: key);
+}
+
 /// ViewState
 abstract class ViewState<Page extends StatefulViewBase,
-        ViewModel extends ViewModelBase>
-    extends State<Page> // ignore: prefer_mixin
-    with
-        WidgetsBindingObserver, ViewInterFace {
+        ViewModel extends ViewModelBase> extends State<Page>
+    with WidgetsBindingObserver, ViewInterFace {
   /// ViewState
   ViewState();
-
-  /// globalKey
-  final GlobalKey<State<StatefulWidget>> globalKey =
-      GlobalKey<State<StatefulWidget>>();
 
   /// viewModel
   ViewModel get viewModel => GetInstance().find<ViewModel>();
 
-  @mustCallSuper
-  void initViewState() {}
-
-  @mustCallSuper
-  void didChangeViewDependencies() {}
-
   @override
-  @mustCallSuper
-  void didChangeDependencies() {
-    didChangeViewDependencies();
-    super.didChangeDependencies();
-  }
-
-  void onInActive() {}
-
-  void onPaused() {}
-
-  void onResumed() {}
-
-  void onDetached() {}
-
-  @override
-  @nonVirtual
   void initState() {
-    initViewState();
     viewModel
       ..listenConnectivityStatus()
       ..onInitView();
 
     viewModel.onError.listen(onError);
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
   }
 
   @override
@@ -64,7 +46,11 @@ abstract class ViewState<Page extends StatefulViewBase,
 
   /// willPopCallBack
   Future<bool> willPopCallBack() async {
-    return true;
+    if (Navigator.of(context).userGestureInProgress) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   @override
@@ -78,10 +64,4 @@ abstract class ViewState<Page extends StatefulViewBase,
 
   /// onError
   void onError(Object error) {}
-}
-
-/// StatefulViewBase
-abstract class StatefulViewBase extends StatefulWidget {
-  /// StatefulViewBase constructor
-  const StatefulViewBase({Key? key}) : super(key: key);
 }
