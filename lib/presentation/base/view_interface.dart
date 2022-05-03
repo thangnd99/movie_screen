@@ -62,7 +62,10 @@ mixin ViewInterFace {
             color: Colors.white,
             child: Stack(
               children: [
-                buildBody(context),
+                Visibility(
+                  visible: viewModel.status.value != Status.loading,
+                  child: buildBody(context),
+                ),
                 Visibility(
                   child: const LoadingDialog(),
                   visible: viewModel.status.value == Status.loading,

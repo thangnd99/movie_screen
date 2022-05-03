@@ -5,7 +5,7 @@ import 'package:movie_screen/data/storage/storage_constant.dart';
 
 import '../model/info_movie_model/info_movie_response_model.dart';
 
-class InfoMovieRepository {
+class HomePageRepository {
   final Request _request = Request();
 
   Future<InfoMovieResponseModel> getListMovie({int page = 1}) async {
